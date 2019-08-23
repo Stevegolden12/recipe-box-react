@@ -41,18 +41,19 @@ function Home() {
 function Add() {
   return (
     <div>    
-      <form>
-        <legend>Add Recipe</legend>
-        <label>Recipe Name</label>
-        <input type="text" />
-        <label>Ingredients</label>
-        <textarea />
-        <label>Instructions</label>
-        <textarea />
-        <label>Image URL (optional)</label>
-        <input type="text" />
+      <form class="addrecipeform">
+        <legend class="addrecipelegend">Add Recipe</legend>
+        <label class="addrecipelabels">Recipe Name*</label><br/>
+        <input type="text" class="addrecipename"/><br/>
+        <label class="addrecipelabels">Ingredients*</label><br/>
+        <textarea class="addrecipeingredients"/><br/>
+        <label class="addrecipelabels">Instructions*</label><br/>
+        <textarea class="addrecipeinstructions"/><br/>
+        <label class="addrecipelabels">Image URL (optional)</label><br/>
+        <input type="text" class="addrecipeimage"/><br/>
         <button>ADD RECIPE</button> 
       </form>
+      <br />
       <Link to={'/'}><button>Back to Home</button></Link>
     </div>
       )

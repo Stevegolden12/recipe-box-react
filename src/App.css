@@ -1,33 +1,41 @@
-.App {
-  text-align: center;
+.addrecipeform {
+  margin-left: 5%;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.addrecipelegend {
+  font-size: 28px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.addrecipelabels {
+  font-size: 12px;
+  color: lightgray;
 }
 
-.App-link {
-  color: #61dafb;
+.addrecipename,
+.addrecipeingredients,
+.addrecipeinstructions,
+.addrecipeimage { 
+  border: none;
+  border-bottom: 1px solid black;
+  width: 90%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.addrecipename:focus,
+.addrecipeingredients:focus,
+.addrecipeinstructions:focus,
+.addrecipeimage:focus {
+  outline: none;
+  border-bottom: 2px solid green;  
+}
+
+  .addrecipename,
+  .addrecipeimage {
+    height: 30px;
   }
-  to {
-    transform: rotate(360deg);
-  }
+
+.addrecipeingredients,
+.addrecipeinstructions {
+  height: 200px;
 }
