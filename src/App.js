@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, Switch, Route } from 'react-router-dom'
+import { Link, Switch, Route } from 'react-router-dom';
+import { useDropzone } from 'react-dropzone';
 import './App.css';
 
 class App extends React.Component {
@@ -49,8 +50,10 @@ function Add() {
         <textarea class="addrecipeingredients"/><br/>
         <label class="addrecipelabels">Instructions*</label><br/>
         <textarea class="addrecipeinstructions"/><br/>
-        <label class="addrecipelabels">Image URL (optional)</label><br/>
-        <input type="text" class="addrecipeimage"/><br/>
+        <label class="addrecipelabels">Image URL (optional)</label><br />   
+        <div>
+        <Accept />
+        </div>
         <button>ADD RECIPE</button> 
       </form>
       <br />
@@ -59,7 +62,44 @@ function Add() {
       )
 }
 
+function Accept(props) {
+  const { acceptedFiles, rejectedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: 'image/jpeg, image/png'
+  });
 
+  const acceptedFilesItems = acceptedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
+  const rejectedFilesItems = rejectedFiles.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
+  return (
+    <section className="container">
+      <div {...getRootProps({ className: 'dropzone  addrecipeimage' })}>
+        <input {...getInputProps()} />
+        <p>Drag 'n' drop some files here, or click to select files</p>
+        <em>(Only *.jpeg and *.png images will be accepted)</em>
+      </div>
+      <aside>
+        <h4>Accepted files</h4>
+        <ul>
+          {acceptedFilesItems}
+        </ul>
+        <h4>Rejected files</h4>
+        <ul>
+          {rejectedFilesItems}
+        </ul>
+      </aside>
+    </section>
+ 
+  );
+}
 
 
 export default App;

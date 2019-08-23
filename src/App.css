@@ -30,8 +30,7 @@
   border-bottom: 2px solid green;  
 }
 
-  .addrecipename,
-  .addrecipeimage {
+  .addrecipename {
     height: 30px;
   }
 
