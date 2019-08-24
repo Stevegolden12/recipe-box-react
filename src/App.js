@@ -1,6 +1,22 @@
 import React from 'react';
+import mongoose from 'mongoose';
 import { Link, Switch, Route } from 'react-router-dom'
 import './App.css';
+
+
+
+
+var uri = 'mongodb+srv://User1:User1@cluster0-pgooz.gcp.mongodb.net/RecipeList';
+
+mongoose.connect(uri, { useNewUrlParser: true }, (err) => {
+  if (!err) {
+    console.log("Database connection successful")
+  } else {
+    console.log("Database is not connected: " + err)
+  }
+})
+
+
 
 class App extends React.Component {
   constructor(props) {
@@ -15,6 +31,7 @@ class App extends React.Component {
   }
 
   render() {
+
     return (
       <div className="App">
         <h1>Recipe Box</h1>
