@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Link, Switch, Route } from 'react-router-dom'
 import './App.css';
 
@@ -7,8 +8,25 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      response: 'not working'
+    }
+
     this.addRecipeForm = this.addRecipeForm.bind(this);
   }
+
+  /*  Boilerplate code to get express */
+  componentDidMount() {
+    axios.get(`https://localhost:5000/hello/app`)
+      .then(res => {
+        const persons = res.data;
+        console.log("AXIOS testing: " + res.data)
+        this.setState({ 
+        response: persons
+        });
+      })
+  }
+  
 
   addRecipeForm() {  
  
@@ -43,16 +61,16 @@ function Home() {
 function Add() {
   return (
     <div>    
-      <form class="addrecipeform">
-        <legend class="addrecipelegend">Add Recipe</legend>
-        <label class="addrecipelabels">Recipe Name*</label><br/>
-        <input type="text" class="addrecipename"/><br/>
-        <label class="addrecipelabels">Ingredients*</label><br/>
-        <textarea class="addrecipeingredients"/><br/>
-        <label class="addrecipelabels">Instructions*</label><br/>
-        <textarea class="addrecipeinstructions"/><br/>
-        <label class="addrecipelabels">Image URL (optional)</label><br/>
-        <input type="text" class="addrecipeimage"/><br/>
+      <form className="addrecipeform">
+        <legend className="addrecipelegend">Add Recipe</legend>
+        <label className="addrecipelabels">Recipe Name*</label><br/>
+        <input type="text" className="addrecipename"/><br/>
+        <label className="addrecipelabels">Ingredients*</label><br/>
+        <textarea className="addrecipeingredients"/><br/>
+        <label className="addrecipelabels">Instructions*</label><br/>
+        <textarea className="addrecipeinstructions"/><br/>
+        <label className="addrecipelabels">Image URL (optional)</label><br/>
+        <input type="text" className="addrecipeimage"/><br/>
         <button>ADD RECIPE</button> 
       </form>
       <br />
