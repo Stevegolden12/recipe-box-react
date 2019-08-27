@@ -1,3 +1,11 @@
+/**********************************
+ * ToDos:
+ * Try to add click event for add on React-router (can I do that and how?)
+ * 
+ * 
+ */
+
+
 import React from 'react';
 import axios from 'axios';
 import { Link, Switch, Route } from 'react-router-dom'
@@ -17,7 +25,7 @@ class App extends React.Component {
 
   /*  Boilerplate code to get express */
   componentDidMount() {
-    axios.get(`https://localhost:5000/hello/app`)
+    axios.get(`http://localhost:5000/api/hello`)
       .then(res => {
         const persons = res.data;
         console.log("AXIOS testing: " + res.data)
@@ -71,7 +79,7 @@ function Add() {
         <textarea className="addrecipeinstructions"/><br/>
         <label className="addrecipelabels">Image URL (optional)</label><br/>
         <input type="text" className="addrecipeimage"/><br/>
-        <button>ADD RECIPE</button> 
+        <button action="/api/world" type="POST">ADD RECIPE</button> 
       </form>
       <br />
       <Link to={'/'}><button>Back to Home</button></Link>
