@@ -66,25 +66,40 @@ function Home() {
   )
 }
 
-function Add() {
-  return (
-    <div>    
-      <form className="addrecipeform">
-        <legend className="addrecipelegend">Add Recipe</legend>
-        <label className="addrecipelabels">Recipe Name*</label><br/>
-        <input type="text" className="addrecipename"/><br/>
-        <label className="addrecipelabels">Ingredients*</label><br/>
-        <textarea className="addrecipeingredients"/><br/>
-        <label className="addrecipelabels">Instructions*</label><br/>
-        <textarea className="addrecipeinstructions"/><br/>
-        <label className="addrecipelabels">Image URL (optional)</label><br/>
-        <input type="text" className="addrecipeimage"/><br/>
-        <button action="/api/world" type="POST">ADD RECIPE</button> 
-      </form>
-      <br />
-      <Link to={'/'}><button>Back to Home</button></Link>
-    </div>
-      )
+class Add extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.addRecipeToDB = this.addRecipeToDB.bind(this);
+  }
+
+  addRecipeToDB(e) {
+    e.preventDefault();
+    const addRecipeInfo = document.getElementsByClassName('addRecipeInfo');
+    console.log(addRecipeInfo[0].value)
+  }
+
+  render() {
+    return (
+      <div>
+        <form className="addrecipeform">
+          <legend className="addrecipelegend">Add Recipe</legend>
+          <label className="addrecipelabels">Recipe Name*</label><br />
+          <input type="text" className="addrecipename addRecipeInfo" /><br />
+          <label className="addrecipelabels">Ingredients*</label><br />
+          <textarea className="addrecipeingredients addRecipeInfo" /><br />
+          <label className="addrecipelabels">Instructions*</label><br />
+          <textarea className="addrecipeinstructions addRecipeInfo" /><br />
+          <label className="addrecipelabels">Image URL (optional)</label><br />
+          <input type="text" className="addrecipeimage addRecipeInfo" /><br />
+          <button action="/api/world" type="POST">ADD RECIPE</button>
+          {/*<button onClick={(e)=>this.addRecipeToDB(e)}>ADD RECIPE</button>*/}
+        </form>
+        <br />
+        <Link to={'/'}><button>Back to Home</button></Link>
+      </div>
+    )
+  }
 }
 
 

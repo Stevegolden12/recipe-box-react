@@ -1,5 +1,5 @@
 
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 var uri = 'mongodb+srv://User1:User1@cluster0-pgooz.gcp.mongodb.net/RecipeList';
 
@@ -24,15 +24,17 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+mongoose.connect(uri, { useNewUrlParser: true }, (err) => {
+  if (!err) {
+    console.log("Database connection successful")
+  } else {
+    console.log("Database is not connected: " + err)
+  }
+})
+
 app.get('/api/hello', (req, res) => {
 
-  mongoose.connect(uri, { useNewUrlParser: true }, (err) => {
-    if (!err) {
-      console.log("Database connection successful")
-    } else {
-      console.log("Database is not connected: " + err)
-    }
-  })
+
 
   res.send("GET api/hello");
 
