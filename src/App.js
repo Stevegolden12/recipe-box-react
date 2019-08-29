@@ -34,7 +34,7 @@ componentDidMount() {
   showRecipesFromDB() {
     axios.get(`http://localhost:5000/home/recipes`)
       .then(res => {
-        const persons = JSON.stringify(res);
+        const persons = (res.data)
         console.log("AXIOS testing: " + persons)
         this.setState({
           response: persons
@@ -95,8 +95,9 @@ class Add extends React.Component {
      recipeInstructions: addRecipeInfo[2].value,
      recipeImg: addRecipeInfo[3].value,
     })
-      .then((res)=> {    
-        console.log(res.config.data)        
+      .then((res) => { 
+        console.log("Testing res post")
+        console.log(res)
       })
       .catch((error)=> {
         console.log(error);

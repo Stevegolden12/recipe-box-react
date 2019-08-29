@@ -27,7 +27,7 @@ var recipeSchema = new Schema({
   url: String,
 });
 
-var recipe = mongoose.model('recipes', recipeSchema);
+
 
 
 
@@ -44,6 +44,7 @@ mongoose.connect(uri, { useNewUrlParser: true }, (err) => {
   }
 })
 
+var recipe = mongoose.model('recipes', recipeSchema);
 
 app.get('/home/recipes/', (req, res) => {
   var list = ["item1", "item2", "item3"];
@@ -54,11 +55,26 @@ app.get('/home/recipes/', (req, res) => {
 
 app.post('/add/recipe', (req, res) => {
   //console.log("TESTING add/recipe")
-  res.send(200, { status: 'ok' })
+  console.log("add/recipe post working")
+
+  console.log(req.body)
   
- // res.send(
- //   `I received your POST request. This is what you sent me: ${req.body.post}`,
- // );
+  var newRecipe = new recipe({
+    name: req.body.recipeName,
+    ingredients: req.body.recipeIngredients,
+    instructions: req.body.recipeInstructions,
+    url: req.body.recipeImg,
+  })
+
+  newRecipe.save(newRecipe, function (err, issue) {
+    if (err) {
+      console.log("Issue could not be created")
+    }
+    else {
+      console.log("Issue successfully created. <br> Issue id number is: " + issue._id)
+    }
+  });
+ 
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
