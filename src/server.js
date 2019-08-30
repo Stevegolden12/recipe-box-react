@@ -3,12 +3,21 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname, 'src')));
 const mongoose = require('mongoose');
 
 var uri = 'mongodb+srv://User1:User1@cluster0-pgooz.gcp.mongodb.net/RecipeList';
+
+mongoose.connect(uri, { useNewUrlParser: true }, (err) => {
+
+  if (!err) {
+    console.log("Database connection successful")
+  } else {
+    console.log("Database is not connected: " + err)
+  }
+})
 
 var Schema = mongoose.Schema;
 var recipeSchema = new Schema({
@@ -36,15 +45,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-mongoose.connect(uri, { useNewUrlParser: true }, (err) => {
-  if (!err) {
-    console.log("Database connection successful")
-  } else {
-    console.log("Database is not connected: " + err)
-  }
-})
 
 var recipe = mongoose.model('recipes', recipeSchema);
+
 
 app.get('/home/recipes/', (req, res) => {
   var list = ["item1", "item2", "item3"];
@@ -57,7 +60,8 @@ app.post('/add/recipe', (req, res) => {
   //console.log("TESTING add/recipe")
   console.log("add/recipe post working")
 
-  console.log(req.body)
+ // console.log(req.body)  
+
   
   var newRecipe = new recipe({
     name: req.body.recipeName,
@@ -67,11 +71,12 @@ app.post('/add/recipe', (req, res) => {
   })
 
   newRecipe.save(newRecipe, function (err, issue) {
+
     if (err) {
       console.log("Issue could not be created")
     }
     else {
-      console.log("Issue successfully created. <br> Issue id number is: " + issue._id)
+      res.send("Issue successfully created. <br> Issue id number is: " + issue._id)
     }
   });
  
