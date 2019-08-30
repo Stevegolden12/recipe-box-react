@@ -3,12 +3,21 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname, 'src')));
 const mongoose = require('mongoose');
 
 var uri = 'mongodb+srv://User1:User1@cluster0-pgooz.gcp.mongodb.net/RecipeList';
+
+mongoose.connect(uri, { useNewUrlParser: true }, (err) => {
+
+  if (!err) {
+    console.log("Database connection successful")
+  } else {
+    console.log("Database is not connected: " + err)
+  }
+})
 
 var Schema = mongoose.Schema;
 var recipeSchema = new Schema({
@@ -27,7 +36,7 @@ var recipeSchema = new Schema({
   url: String,
 });
 
-var recipe = mongoose.model('recipes', recipeSchema);
+
 
 
 
@@ -36,13 +45,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-mongoose.connect(uri, { useNewUrlParser: true }, (err) => {
-  if (!err) {
-    console.log("Database connection successful")
-  } else {
-    console.log("Database is not connected: " + err)
-  }
-})
+
+var recipe = mongoose.model('recipes', recipeSchema);
 
 
 app.get('/home/recipes/', (req, res) => {
@@ -54,11 +58,28 @@ app.get('/home/recipes/', (req, res) => {
 
 app.post('/add/recipe', (req, res) => {
   //console.log("TESTING add/recipe")
-  res.send(200, { status: 'ok' })
+  console.log("add/recipe post working")
+
+ // console.log(req.body)  
+
   
- // res.send(
- //   `I received your POST request. This is what you sent me: ${req.body.post}`,
- // );
+  var newRecipe = new recipe({
+    name: req.body.recipeName,
+    ingredients: req.body.recipeIngredients,
+    instructions: req.body.recipeInstructions,
+    url: req.body.recipeImg,
+  })
+
+  newRecipe.save(newRecipe, function (err, issue) {
+
+    if (err) {
+      console.log("Issue could not be created")
+    }
+    else {
+      res.send("Issue successfully created. <br> Issue id number is: " + issue._id)
+    }
+  });
+ 
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

@@ -32,9 +32,9 @@ componentDidMount() {
   }
 
   showRecipesFromDB() {
-    axios.get(`http://localhost:5000/home/recipes`)
+    axios.get(`http://localhost:8080/home/recipes`)
       .then(res => {
-        const persons = JSON.stringify(res);
+        const persons = (res.data)
         console.log("AXIOS testing: " + persons)
         this.setState({
           response: persons
@@ -89,14 +89,14 @@ class Add extends React.Component {
     e.preventDefault();
     const addRecipeInfo = document.getElementsByClassName('addRecipeInfo');   
 
-    axios.post(`http://localhost:5000/add/recipe`, {
+    axios.post(`http://localhost:8080/add/recipe`, {
      recipeName: addRecipeInfo[0].value,
      recipeIngredients: addRecipeInfo[1].value,
      recipeInstructions: addRecipeInfo[2].value,
      recipeImg: addRecipeInfo[3].value,
     })
-      .then((res)=> {    
-        console.log(res.config.data)        
+      .then((res) => {    
+        console.log(res)
       })
       .catch((error)=> {
         console.log(error);
