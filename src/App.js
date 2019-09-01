@@ -17,7 +17,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      response: 'not working'
+      recipe: []
     }
 
 
@@ -31,15 +31,20 @@ componentDidMount() {
 
   }
 
-  showRecipesFromDB() {
-    axios.get(`http://localhost:8080/home/recipes`)
-      .then(res => {
-        const persons = (res.data)
-        console.log("AXIOS testing: " + persons)
+ showRecipesFromDB() {
+   axios.get(`http://localhost:8080/home/recipes`)
+      .then(res => { 
+        const allrecipes = (res.data)
+        
+        allrecipes.map((val) => {
+          console.log(val)
+        })
         this.setState({
-          response: persons
+          recipe: [...allrecipes]
         });
-      })
+     })
+
+   console.log(this.state.recipe)
   }
 
 
