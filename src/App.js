@@ -17,7 +17,14 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      response: 'not working'
+      recipe: [
+        {       
+          name: 'Pasta'
+        },
+        { 
+          name: 'Hamburger'
+        }
+      ]
     }
 
 
@@ -31,15 +38,19 @@ componentDidMount() {
 
   }
 
-  showRecipesFromDB() {
-    axios.get(`http://localhost:8080/home/recipes`)
-      .then(res => {
-        const persons = (res.data)
-        console.log("AXIOS testing: " + persons)
-        this.setState({
-          response: persons
-        });
-      })
+ showRecipesFromDB() {
+   axios.get(`http://localhost:8080/home/recipes`)
+      .then(res => { 
+        const allrecipes = (res.data)
+        console.log("res.data.length: " + res.data.length)     
+        if (res.data.length > 0) {
+          this.setState({
+            recipe: [...allrecipes]
+          });
+        }
+     })
+
+   console.log(this.state.recipe)
   }
 
 
@@ -50,7 +61,7 @@ componentDidMount() {
   }
 
   render() {
-
+    console.log(this.state.recipe)
     return (
       <div className="App">
         <h1>Recipe Box</h1>
@@ -59,8 +70,14 @@ componentDidMount() {
         </section>
 
         <hr />
-      <Switch>
-        <Route exact path="/" component={Home} />
+        <Switch>
+          {/*
+          <Route exact path="/" component={Home} />
+          */}
+          <Route exact path="/" render={props =>
+            (<Home {...props} recipes={this.state.recipe} />)
+          } />
+      
           <Route exact path="/add" component={Add} />
       </Switch>
       </div>
@@ -68,9 +85,13 @@ componentDidMount() {
   }
 }
 
-function Home() {
+function Home(props) {
+
   return (
-    <div>Home</div>
+    <div>
+      <div>Home</div>
+      <div>{props.recipes[0].name}</div>
+     </div>
   )
 }
 

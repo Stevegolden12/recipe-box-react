@@ -1,11 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+var cors = require('cors');
 const path = require('path');
 const app = express();
 const port = process.env.PORT || 8080;
 
+
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'src')));
+
 const mongoose = require('mongoose');
 
 var uri = 'mongodb+srv://User1:User1@cluster0-pgooz.gcp.mongodb.net/RecipeList';
@@ -26,11 +32,11 @@ var recipeSchema = new Schema({
     required: true,
   },
   ingredients: {
-    type: [String],
+    type: String,
     required: true,
   },
   instructions: {
-    type: [String],
+    type: String,
     required: true
   },
   url: String,
@@ -40,9 +46,6 @@ var recipeSchema = new Schema({
 
 
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
@@ -50,9 +53,16 @@ var recipe = mongoose.model('recipes', recipeSchema);
 
 
 app.get('/home/recipes/', (req, res) => {
-  var list = ["item1", "item2", "item3"];
-  res.json(list);
-  console.log('Sent list of items');
+  
+  recipe.find({}, function (err, docs) {
+    if (!err) {
+      res.json(docs);
+      process.exit();
+    } else {
+      throw err;
+    }
+  });
+
 
 });
 
