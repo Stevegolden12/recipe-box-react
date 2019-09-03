@@ -72,7 +72,7 @@ app.get('/home/recipes/', (req, res) => {
 
 });
 
-app.post('/add/recipe/', (req, res) => {
+app.post('/add/recipe', (req, res) => {
   //console.log("TESTING add/recipe")
   console.log("add/recipe post working")
 

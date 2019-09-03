@@ -19,10 +19,10 @@ class App extends React.Component {
     this.state = {
       recipe: [
         {       
-          name: 'Pasta'
+          name: 'Test1'
         },
         { 
-          name: 'Hamburger'
+          name: 'Test2'
         }
       ]
     }
