@@ -110,7 +110,7 @@ class Add extends React.Component {
     e.preventDefault();
     const addRecipeInfo = document.getElementsByClassName('addRecipeInfo');   
 
-    axios.post(`http://localhost:8080/add/recipe`, {
+    axios.post(`http://localhost:8080/add/recipes`, {
      recipeName: addRecipeInfo[0].value,
      recipeIngredients: addRecipeInfo[1].value,
      recipeInstructions: addRecipeInfo[2].value,
