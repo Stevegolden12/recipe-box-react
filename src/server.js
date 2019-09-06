@@ -5,22 +5,12 @@ const path = require('path');
 const app = express();
 var host = process.env.HOST || '0.0.0.0';
 const port = process.env.PORT || 8080;
-var cors_proxy = require('cors-anywhere');
-
+var router = express.Router();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'src')));
-
-
-cors_proxy.createServer({
-  originWhitelist: [], // Allow all origins
-  requireHeader: ['origin', 'x-requested-with'],
-  removeHeaders: ['cookie', 'cookie2']
-}).listen(port, host, function () {
-  console.log('Running CORS Anywhere on ' + host + ':' + port);
-});
 
 
 
@@ -63,16 +53,16 @@ app.get('/home/recipes/', (req, res) => {
   recipe.find({}, function (err, docs) {
     if (!err) {
       res.json(docs);
-      process.exit();
+      //process.exit();
     } else {
       throw err;
     }
   });
-
+  
 
 });
 
-app.post('/add/recipe', (req, res) => {
+app.post('/add/recipes/', (req, res) => {
   //console.log("TESTING add/recipe")
   console.log("add/recipe post working")
 
