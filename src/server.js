@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 var host = process.env.HOST || '0.0.0.0';
 const port = process.env.PORT || 8080;
-
+var router = express.Router();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -53,12 +53,12 @@ app.get('/home/recipes/', (req, res) => {
   recipe.find({}, function (err, docs) {
     if (!err) {
       res.json(docs);
-      process.exit();
+      //process.exit();
     } else {
       throw err;
     }
   });
-
+  
 
 });
 
