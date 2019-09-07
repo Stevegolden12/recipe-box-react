@@ -90,7 +90,18 @@ function Home(props) {
   return (
     <div>
       <div>Home</div>
-      <div>{props.recipes[0].name}</div>
+      <section className="index__recipesectionlayout">
+        {props.recipes.map((recipes, index) => {
+          return (
+            <div className="index__recipecardlayout">
+              {recipes.url === '' && <div>No Image</div>}
+              {recipes.url !== '' ** <div>recipes.url</div>}
+              <div key={`recipes.name${index}`} className="index__recipesnamecardlayout">{recipes.name}</div>
+              <div key={`openrecipes${index}`}>OPEN RECIPE</div>             
+              </div>
+            )
+        })}
+      </section>     
      </div>
   )
 }
