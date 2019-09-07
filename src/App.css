@@ -1,3 +1,21 @@
+.index__recipesectionlayout {
+  display: flex;
+  justify-content: space-around;
+ 
+}
+
+.index__recipecardlayout {
+  width: 30%;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 18px;
+}
+
+.index__recipesnamecardlayout {
+  background-color: hsl(174, 100%, 29%);
+  color: hsl(0,100%,100%);
+}
+
 .addrecipeform {
   margin-left: 5%;
 }
