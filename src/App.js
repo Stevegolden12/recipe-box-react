@@ -113,7 +113,7 @@ class Home extends React.Component {
                 {recipes.url !== '' ** <div key={`imageurl${index}`}>recipes.url</div>}
                 <div key={`recipes.name${index}`} className="index__recipesnamecardlayout">{recipes.name}</div>
                 <div key={`openrecipeswrapper${index}`}>
-                  <input key={`openrecipes${index}`} type='button' value='OPEN RECIPE' onClick={this.showRecipePage} />
+                  <Link to='/show' ><input key={`openrecipes${index}`} type='button' value='OPEN RECIPE' /></Link>
                 </div>
               </div>
             )
