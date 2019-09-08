@@ -62,6 +62,14 @@ app.get('/home/recipes/', (req, res) => {
 
 });
 
+app.get("/auth/google/callback", (req, res) => {
+    res.redirect("/login");
+  });
+
+app.get('show/recipes/', (req, res) => {
+  console.log("TESTING shows/recipes")
+})
+
 app.post('/add/recipes/', (req, res) => {
   //console.log("TESTING add/recipe")
   console.log("add/recipe post working")
