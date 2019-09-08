@@ -8,7 +8,7 @@
 
 import React from 'react';
 import axios from 'axios';
-import { Link, Switch, Route } from 'react-router-dom'
+import { Link, Switch, Route, Redirect } from 'react-router-dom'
 import './App.css';
 
 
@@ -79,31 +79,63 @@ componentDidMount() {
           } />
       
           <Route exact path="/add" component={Add} />
+          <Route exact path="/show" component={Show} />
+          
       </Switch>
       </div>
     );
   }
 }
 
-function Home(props) {
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <div>
-      <div>Home</div>
-      <section className="index__recipesectionlayout">
-        {props.recipes.map((recipes, index) => {
-          return (
-            <div className="index__recipecardlayout">
-              {recipes.url === '' && <div>No Image</div>}
-              {recipes.url !== '' ** <div>recipes.url</div>}
-              <div key={`recipes.name${index}`} className="index__recipesnamecardlayout">{recipes.name}</div>
-              <div key={`openrecipes${index}`}>OPEN RECIPE</div>             
+    this.showRecipePage = this.showRecipePage.bind(this);
+  }
+
+  showRecipePage() {
+     console.log("testing showRecipePage")
+    return <Redirect to='/show' />
+
+  }
+  
+
+  render() {
+    return (
+      <div>
+        <div>Home</div>
+        <section className="index__recipesectionlayout">
+          {this.props.recipes.map((recipes, index) => {
+            return (
+              <div key={`recipecardlayout${index}`} className="index__recipecardlayout">
+                {recipes.url === '' && <div key={`noimageurl${index}`}>No Image</div>}
+                {recipes.url !== '' ** <div key={`imageurl${index}`}>recipes.url</div>}
+                <div key={`recipes.name${index}`} className="index__recipesnamecardlayout">{recipes.name}</div>
+                <div key={`openrecipeswrapper${index}`}>
+                  <input key={`openrecipes${index}`} type='button' value='OPEN RECIPE' onClick={this.showRecipePage} />
+                </div>
               </div>
             )
-        })}
-      </section>     
-     </div>
-  )
+          })}
+        </section>
+      </div>
+    )
+  }
+}
+
+class Show extends React.Component {
+  /*
+  constructor(props) {
+    super(props);
+  }
+  */
+  render() {
+    return (
+      <div>Testing Show</div>
+      )
+  }
+
 }
 
 class Add extends React.Component {
