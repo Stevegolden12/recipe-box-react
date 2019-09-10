@@ -1,18 +1,32 @@
+:root {
+  --cardlayoutcolor: hsl(174, 100%, 29%);
+}
+
+body {
+
+}
+
 .index__recipesectionlayout {
   display: flex;
   justify-content: space-around;
- 
+  flex-wrap: wrap;
 }
 
 .index__recipecardlayout {
-  width: 30%;
+  width: 75%;
   border: 1px solid black;
   text-align: center;
   font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.index__noimagecard {
+  height: 125px;
+  background-color: var(--cardlayoutcolor);
 }
 
 .index__recipesnamecardlayout {
-  background-color: hsl(174, 100%, 29%);
+  background-color: var(--cardlayoutcolor);
   color: hsl(0,100%,100%);
 }
 
@@ -55,5 +69,46 @@
 
 .addrecipeingredients,
 .addrecipeinstructions {
+  height: 200px;
+}
+
+.showrecipeform {
+  font-family: 'Roboto', sans-serif;
+}
+
+.showrecipeform {
+  width: 95%;
+  margin-left: 5%;
+}
+
+.showrecipeinfo {
+  border: none;
+  resize: none;
+  width: 90%;
+  height: 30px;
+}
+
+.showrecipeinfo:focus {
+  outline: 1px solid var(--cardlayoutcolor)
+}
+
+.showrecipename {
+  width: 90%;
+  height: 50px;
+  border: none;
+  font-size: 30px;
+  background-color: var(--cardlayoutcolor);
+  color: white;
+}
+
+  .showrecipename:focus {
+    outline: 5px solid black;
+  }
+
+.showrecipeingredients {
+  height: 100px;
+}
+
+.showrecipeinstructions {
   height: 200px;
 }
