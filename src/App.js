@@ -98,13 +98,12 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <div>Home</div>
         <section className="index__recipesectionlayout">
           {this.props.recipes.map((recipes, index) => {
             console.table(recipes)
             return (
               <div key={`recipecardlayout${index}`} className="index__recipecardlayout">
-                {recipes.url === '' && <div key={`noimageurl${index}`}>No Image</div>}
+                {recipes.url === '' && <div key={`noimageurl${index}`} class="index__noimagecard"></div>}
                 {recipes.url !== '' ** <div key={`imageurl${index}`}>recipes.url</div>}
                 <div key={`recipes.name${index}`} className="index__recipesnamecardlayout">{recipes.name}</div>
                 <div key={`openrecipeswrapper${index}`}>
@@ -131,16 +130,24 @@ class Show extends React.Component {
     return (
       <div>
         <form className="showrecipeform">
-          <legend className="showrecipelegend">Recipe Name</legend>
+          <legend className="showrecipelegend"></legend>
           <label className="showrecipelabels"></label><br />
-          <input type="text" className="showrecipename showRecipeInfo" value={ this.props.location.state.recipeName }/><br />
-          <label className="showrecipelabels">Ingredients</label><br />
-          <textarea className="showrecipeingredients showRecipeInfo" value={this.props.location.state.recipeIngredients} /><br />
-          <label className="showrecipelabels">Instructions</label><br />
-          <textarea className="showrecipeinstructions showRecipeInfo" value={this.props.location.state.recipeInstructions} /><br />
+          <input type="text" className="showrecipename showrecipeinfo" value={this.props.location.state.recipeName} /><br />
+          
+          {this.props.location.state.recipeURL !== '' && <img src={'./img/' + `${this.props.location.state.recipeURL}`} />}       
+        
           <label className="showrecipelabels">Image URL (optional)</label><br />
-          <input type="text" className="showrecipeimage showRecipeInfo" /><br />
-          <button onClick={(e) => this.addRecipeToDB(e)}>ADD RECIPE</button>
+          {/*
+          {this.props.location.state.recipeURL !== '' && <input type="text" className="showrecipeimage showRecipeInfo" value={this.props.location.state.recipeURL}/>} 
+          */}
+          {this.props.location.state.recipeURL === '' && <input type="text" className="showrecipeimage showrecipeinfo" value='NONE' />} 
+          <br /><br />
+          <label className="showrecipelabels">Ingredients:</label><br /><br />
+          <textarea className="showrecipeingredients showrecipeinfo" value={this.props.location.state.recipeIngredients} /><br />
+          <label className="showrecipelabels">Instructions:</label><br /><br />
+          <textarea className="showrecipeinstructions showrecipeinfo" value={this.props.location.state.recipeInstructions} /><br />
+
+          <button onClick={(e) => this.addRecipeToDB(e)}>EDIT RECIPE</button>
         </form>
         <br />
         <Link to={'/'}><button>Back to Home</button></Link>
