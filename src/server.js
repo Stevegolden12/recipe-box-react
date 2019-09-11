@@ -93,4 +93,29 @@ app.post('/add/recipes/', (req, res) => {
  
 });
 
+app.post('/show/editrecipes/', (req, res) => {
+  var editRecipe = new recipe({
+    name: req.body.recipeName,
+    ingredients: req.body.recipeIngredients,
+    instructions: req.body.recipeInstructions,
+    url: req.body.recipeImg,
+    id: req.body._id,
+  })
+
+  console.log(editRecipe.id)
+  /*
+  newRecipe.save(editRecipe, function (err, issue) {
+
+    if (err) {
+      console.log("Issue could not be created")
+    }
+    else {
+      res.send("Issue successfully created. <br> Issue id number is: " + issue._id)
+    }
+  });
+  */
+})
+
+
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
