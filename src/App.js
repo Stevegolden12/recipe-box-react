@@ -96,18 +96,19 @@ class Home extends React.Component {
 
 
   render() {
+    console.log(this.props.recipes)
     return (
       <div>
         <section className="index__recipesectionlayout">
           {this.props.recipes.map((recipes, index) => {
-            console.table(recipes)
+            
             return (
               <div key={`recipecardlayout${index}`} className="index__recipecardlayout">
-                {recipes.url === '' && <div key={`noimageurl${index}`} class="index__noimagecard"></div>}
+                {recipes.url === '' && <div key={`noimageurl${index}`} className="index__noimagecard"></div>}
                 {recipes.url !== '' ** <div key={`imageurl${index}`}>recipes.url</div>}
                 <div key={`recipes.name${index}`} className="index__recipesnamecardlayout">{recipes.name}</div>
                 <div key={`openrecipeswrapper${index}`}>
-                  <Link to={{ pathname: '/show', state: { recipeName: recipes.name, recipeIngredients: recipes.ingredients, recipeInstructions: recipes.instructions, recipeURL: recipes.url } }} ><input key={`openrecipes${index}`} type='button' value='OPEN RECIPE' /></Link>
+                  <Link to={{ pathname: '/show', state: { recipeName: recipes.name, recipeIngredients: recipes.ingredients, recipeInstructions: recipes.instructions, recipeURL: recipes.url, recipeID: recipes._id } }} ><input key={`openrecipes${index}`} type='button' value='OPEN RECIPE' /></Link>
                 </div>
               </div>
             )
@@ -122,32 +123,79 @@ class Show extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state={
+      recipeName: '',
+      recipeURL: '',
+      recipeIngredients: '',
+      recipeInstructions: '',
+    }
+
+    this.editRecipeToDB = this.editRecipeToDB.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({
+      recipeName: this.props.location.state.recipeName,
+      recipeURL: this.props.location.state.recipeURL,
+      recipeIngredients: this.props.location.state.recipeIngredients,
+      recipeInstructions: this.props.location.state.recipeInstructions,
+      recipeID: this.props.location.state._id,
+    })
+  }
+
+  handleChange(e, stateName) {
+    const sName = stateName;
+    this.setState({
+      [sName]: e.target.value
+    })  
+  }
+
+  editRecipeToDB(e) {
+    e.preventDefault();
+
+    
+    axios.post(`http://localhost:8080/show/editrecipes`, {
+      recipeName: this.state.recipeName,
+      recipeIngredients: this.state.recipeIngredients,
+      recipeInstructions: this.state.recipeInstructions,
+      recipeImg: this.state.recipeURL,
+      recipeId: this.state.recipeID
+    })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
+
   }
 
   render() {
-    console.table(this.props.location.state)
-    //console.log(this.props.location.state.name)
+    
     return (
       <div>
         <form className="showrecipeform">
           <legend className="showrecipelegend"></legend>
           <label className="showrecipelabels"></label><br />
-          <input type="text" className="showrecipename showrecipeinfo" value={this.props.location.state.recipeName} /><br />
+          <input type="text" className="showrecipename showrecipeinfo" value={this.state.recipeName} onChange={(e)=>this.handleChange(e, 'recipeName')} /><br />
           
-          {this.props.location.state.recipeURL !== '' && <img src={'./img/' + `${this.props.location.state.recipeURL}`} />}       
+          {this.state.recipeURL !== '' && <img src={'./img/' + `${this.state.recipeURL}`} />}       
         
           <label className="showrecipelabels">Image URL (optional)</label><br />
           {/*
-          {this.props.location.state.recipeURL !== '' && <input type="text" className="showrecipeimage showRecipeInfo" value={this.props.location.state.recipeURL}/>} 
-          */}
-          {this.props.location.state.recipeURL === '' && <input type="text" className="showrecipeimage showrecipeinfo" value='NONE' />} 
+          {this.props.location.state.recipeURL !== '' && <input type="text" className="showrecipeimage showRecipeInfo" value={this.state.recipeURL} onChange={(e)=>this.handleChange(e, 'recipeURL')/>}
+           */}
+          {this.state.recipeURL === '' && <input type="text" className="showrecipeimage showrecipeinfo" value={this.state.recipeURL} onChange={(e) => this.handleChange(e, 'recipeURL')} />} 
           <br /><br />
           <label className="showrecipelabels">Ingredients:</label><br /><br />
-          <textarea className="showrecipeingredients showrecipeinfo" value={this.props.location.state.recipeIngredients} /><br />
+          <textarea className="showrecipeingredients showrecipeinfo" value={this.state.recipeIngredients} onChange={(e) => this.handleChange(e, 'recipeIngredients')} /><br />
           <label className="showrecipelabels">Instructions:</label><br /><br />
-          <textarea className="showrecipeinstructions showrecipeinfo" value={this.props.location.state.recipeInstructions} /><br />
+          <textarea className="showrecipeinstructions showrecipeinfo" value={this.state.recipeInstructions} onChange={(e) => this.handleChange(e, 'recipeInstructions')} /><br />
 
-          <button onClick={(e) => this.addRecipeToDB(e)}>EDIT RECIPE</button>
+          <button onClick={(e) => this.editRecipeToDB(e)}>EDIT RECIPE</button>
         </form>
         <br />
         <Link to={'/'}><button>Back to Home</button></Link>
