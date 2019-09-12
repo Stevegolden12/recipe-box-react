@@ -129,6 +129,7 @@ class Show extends React.Component {
       recipeURL: '',
       recipeIngredients: '',
       recipeInstructions: '',
+      recipeID: '',
     }
 
     this.editRecipeToDB = this.editRecipeToDB.bind(this);
@@ -136,12 +137,13 @@ class Show extends React.Component {
   }
 
   componentDidMount() {
+
     this.setState({
       recipeName: this.props.location.state.recipeName,
       recipeURL: this.props.location.state.recipeURL,
       recipeIngredients: this.props.location.state.recipeIngredients,
       recipeInstructions: this.props.location.state.recipeInstructions,
-      recipeID: this.props.location.state._id,
+      recipeID: this.props.location.state.recipeID,
     })
   }
 
@@ -161,7 +163,7 @@ class Show extends React.Component {
       recipeIngredients: this.state.recipeIngredients,
       recipeInstructions: this.state.recipeInstructions,
       recipeImg: this.state.recipeURL,
-      recipeId: this.state.recipeID
+      recipeId: this.state.recipeID,   
     })
       .then((res) => {
         console.log(res)

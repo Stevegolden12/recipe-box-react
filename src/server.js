@@ -90,19 +90,40 @@ app.post('/add/recipes/', (req, res) => {
       res.send("Issue successfully created. <br> Issue id number is: " + issue._id)
     }
   });
- 
+
 });
 
 app.post('/show/editrecipes/', (req, res) => {
-  var editRecipe = new recipe({
-    name: req.body.recipeName,
-    ingredients: req.body.recipeIngredients,
-    instructions: req.body.recipeInstructions,
-    url: req.body.recipeImg,
-    id: req.body._id,
-  })
+  console.log("Hitting update express route")
+  console.log("req.body: " + req.body.recipeId)
+  recipe.findById(req.body.recipeId, function (err, doc) {
+    if (!err) {
+      console.log("No errors");
+      console.log(doc) 
 
-  console.log(editRecipe.id)
+      doc.name = req.body.recipeName;
+      doc.ingredients = req.body.recipeIngredients;
+      doc.instructions = req.body.recipeInstructions;
+      doc.url = req.body.recipeImg;
+
+      doc.save(function (err) {
+        if (err) {
+          console.error('ERROR!');
+        } else {
+          console.log("Update successful")
+        }
+      });
+
+
+    } else {
+      console("Errors")
+      console.log(err)
+    }
+
+  });
+
+
+
   /*
   newRecipe.save(editRecipe, function (err, issue) {
 
