@@ -11,6 +11,27 @@ import axios from 'axios';
 import { Link, Switch, Route, Redirect } from 'react-router-dom'
 import './App.css';
 
+const initialState = {
+  isGetDBRecipes: false,
+}
+
+
+const mapStateToProps = (state, ownProps) => ({
+  // ... computed data from state and optionally ownProps
+})
+
+const mapDispatchToProps = {
+  // ... normally is an object full of action creators
+}
+
+// `connect` returns a new function that accepts the component to wrap:
+const connectToStore = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
+// and that function returns the connected, wrapper component:
+const ConnectedComponent = connectToStore(Component)
+
 
 class App extends React.Component {
   constructor(props) {
@@ -24,17 +45,35 @@ class App extends React.Component {
         { 
           name: 'Test2'
         }
-      ]
+      ],
+      isGetDatabaseRecipes: false,
     }
 
 
+
     this.showRecipesFromDB = this.showRecipesFromDB.bind(this);
+    this.checkDatabaseRecipes = this.checkDatabaseRecipes.bind(this);
   }
 
   /*  Boilerplate code to get express */
-componentDidMount() { 
+  componentDidMount() { 
+    this.showRecipesFromDB();
 
-   this.showRecipesFromDB();
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("checking CDU")
+    
+    console.log("isGetDatabaseRecipes: " + this.state.isGetDatabaseRecipes)
+    console.log(prevState.isGetDatabaseRecipes)
+    console.log(this.state.isGetDatabaseRecipes)
+    if (this.state.isGetDatabaseRecipes === true) {
+      this.showRecipesFromDB();
+      this.setState({
+        isGetDatabaseRecipes: false,
+      })
+    }
 
   }
 
@@ -55,8 +94,13 @@ componentDidMount() {
 
 
 
-  addRecipeForm() {  
- 
+  checkDatabaseRecipes() {  
+    console.log("checkDatabaseRecipes")
+    this.setState({
+      isGetDatabaseRecipes: true
+    })
+    this.forceUpdate();
+    console.log("checkDatabaseRecipes change isGETDatabaseRecipes: " + this.state.isGetDatabaseRecipes)
 
   }
 
@@ -66,7 +110,7 @@ componentDidMount() {
       <div className="App">
         <h1>Recipe Box</h1>
         <section>
-          <Link to="/add"><button className="addItem">Add Recipe</button></Link>
+          <Link to="/add"><button className="addItem" onClick={this.checkDatabaseRecipes}>Add Recipe</button></Link>
         </section>
 
         <hr />
