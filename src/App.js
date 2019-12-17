@@ -1,21 +1,16 @@
-/**********************************
- * ToDos:
- * Try to add click event for add on React-router (can I do that and how?)
- * 
- * 
- */
-
 
 import React from 'react';
 import axios from 'axios';
 import { Link, Switch, Route, Redirect } from 'react-router-dom'
 import './App.css';
 
+import testing from './components/Testing'
+
 const initialState = {
   isGetDBRecipes: false,
 }
 
-
+/*
 const mapStateToProps = (state, ownProps) => ({
   // ... computed data from state and optionally ownProps
 })
@@ -32,6 +27,7 @@ const connectToStore = connect(
 // and that function returns the connected, wrapper component:
 const ConnectedComponent = connectToStore(Component)
 
+*/
 
 class App extends React.Component {
   constructor(props) {
@@ -124,7 +120,7 @@ class App extends React.Component {
       
           <Route exact path="/add" component={Add} />
           <Route exact path="/show" component={Show} />
-          
+          <Route exact path="/test" component={testing} />
       </Switch>
       </div>
     );
